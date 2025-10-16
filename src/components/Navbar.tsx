@@ -113,6 +113,9 @@ const Navbar = () => {
             <Link to="/comparador" className="text-sm font-medium hover:text-primary transition-colors">
               Comparador
             </Link>
+            <Link to="/blog" className="text-sm font-medium hover:text-primary transition-colors">
+              Blog
+            </Link>
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -177,6 +180,13 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Comparador
+              </Link>
+              <Link
+                to="/blog"
+                className="text-sm font-medium hover:text-primary transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Blog
               </Link>
               {user ? (
                 <>
