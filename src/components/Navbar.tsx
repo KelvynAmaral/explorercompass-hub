@@ -17,6 +17,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [session, setSession] = useState<Session | null>(null);
+  const [displayName, setDisplayName] = useState<string>("");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -26,6 +27,24 @@ const Navbar = () => {
       (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
+        
+        // Fetch display name from profiles when user logs in
+        if (session?.user) {
+          setTimeout(() => {
+            supabase
+              .from('profiles')
+              .select('display_name')
+              .eq('id', session.user.id)
+              .single()
+              .then(({ data }) => {
+                if (data?.display_name) {
+                  setDisplayName(data.display_name);
+                }
+              });
+          }, 0);
+        } else {
+          setDisplayName("");
+        }
       }
     );
 
@@ -33,6 +52,20 @@ const Navbar = () => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
+      
+      // Fetch display name for existing session
+      if (session?.user) {
+        supabase
+          .from('profiles')
+          .select('display_name')
+          .eq('id', session.user.id)
+          .single()
+          .then(({ data }) => {
+            if (data?.display_name) {
+              setDisplayName(data.display_name);
+            }
+          });
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -83,7 +116,10 @@ const Navbar = () => {
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="rounded-full">
+                  <Button variant="ghost" className="gap-2">
+                    <span className="text-sm font-medium">
+                      Olá, {displayName || user.email?.split('@')[0]}!
+                    </span>
                     <Avatar className="h-8 w-8">
                       <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-primary-foreground">
                         {getUserInitials()}

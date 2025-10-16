@@ -21,7 +21,7 @@ const Auth = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
-  const [signupData, setSignupData] = useState({ email: "", password: "" });
+  const [signupData, setSignupData] = useState({ displayName: "", email: "", password: "" });
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,6 +79,9 @@ const Auth = () => {
         password: validated.password,
         options: {
           emailRedirectTo: `${window.location.origin}/`,
+          data: {
+            display_name: signupData.displayName,
+          },
         },
       });
 
@@ -211,6 +214,17 @@ const Auth = () => {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSignup} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="signup-name">Nome Completo</Label>
+                    <Input
+                      id="signup-name"
+                      type="text"
+                      placeholder="Seu nome completo"
+                      value={signupData.displayName}
+                      onChange={(e) => setSignupData({ ...signupData, displayName: e.target.value })}
+                      required
+                    />
+                  </div>
                   <div className="space-y-2">
                     <Label htmlFor="signup-email">E-mail</Label>
                     <Input
