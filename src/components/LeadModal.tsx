@@ -124,7 +124,7 @@ const LeadModal = ({ isOpen, onClose }: LeadModalProps) => {
                     <SelectValue placeholder="Selecione uma opção" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="tourism">Planear uma viagem de turismo</SelectItem>
+                    <SelectItem value="tourism">Planejar uma viagem de turismo</SelectItem>
                     <SelectItem value="relocate">Mudar-me para outro país</SelectItem>
                     <SelectItem value="research">Apenas a pesquisar por enquanto</SelectItem>
                   </SelectContent>
