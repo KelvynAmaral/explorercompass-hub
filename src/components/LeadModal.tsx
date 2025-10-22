@@ -86,7 +86,7 @@ const LeadModal = ({ isOpen, onClose }: LeadModalProps) => {
           <>
             <DialogHeader>
               <DialogTitle className="text-2xl font-heading font-bold text-center mb-2">
-                Quer ajuda personalizada para planear a sua jornada?
+                Quer ajuda personalizada para planejar a sua jornada?
               </DialogTitle>
               <p className="text-sm text-muted-foreground text-center">
                 Deixe os seus dados e a nossa equipa de especialistas entrará em contacto para
