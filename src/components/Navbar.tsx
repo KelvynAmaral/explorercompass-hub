@@ -113,6 +113,9 @@ const Navbar = () => {
             <Link to="/comparador" className="text-sm font-medium hover:text-primary transition-colors">
               Comparador
             </Link>
+            <Link to="/calculadora-poder-de-compra" className="text-sm font-medium hover:text-primary transition-colors">
+              Calculadora
+            </Link>
             <Link to="/blog" className="text-sm font-medium hover:text-primary transition-colors">
               Blog
             </Link>
@@ -180,6 +183,13 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Comparador
+              </Link>
+              <Link
+                to="/calculadora-poder-de-compra"
+                className="text-sm font-medium hover:text-primary transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Calculadora
               </Link>
               <Link
                 to="/blog"

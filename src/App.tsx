@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import CityDetail from "./pages/CityDetail";
 import Comparador from "./pages/Comparador";
+import CalculadoraPoderCompra from "./pages/CalculadoraPoderCompra";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/destino/:id" element={<CityDetail />} />
           <Route path="/comparador" element={<Comparador />} />
+          <Route path="/calculadora-poder-de-compra" element={<CalculadoraPoderCompra />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogArticle />} />
           <Route path="/auth" element={<Auth />} />
