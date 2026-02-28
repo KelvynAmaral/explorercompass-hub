@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import CityCard from "@/components/CityCard";
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
