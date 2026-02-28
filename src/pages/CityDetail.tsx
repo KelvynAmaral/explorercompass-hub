@@ -342,6 +342,11 @@ const CityDetail = () => {
         </section>
       </main>
       <Footer />
+      <TravelInquiryDrawer
+        cityName={city.name}
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+      />
     </div>
   );
 };
