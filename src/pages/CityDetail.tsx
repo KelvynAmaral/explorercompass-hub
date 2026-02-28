@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import TravelInquiryDrawer from "@/components/TravelInquiryDrawer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -16,6 +17,7 @@ import {
   Calendar,
   Phone,
   Star,
+  Plane,
 } from "lucide-react";
 import buenosAiresImg from "@/assets/buenos-aires.jpg";
 import medellinImg from "@/assets/medellin.jpg";
@@ -126,6 +128,7 @@ const citiesData: Record<string, any> = {
 const CityDetail = () => {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("turismo");
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const city = id ? citiesData[id] : null;
 
   if (!city) {
@@ -162,9 +165,20 @@ const CityDetail = () => {
               <h1 className="font-heading font-bold text-5xl text-white mb-2">
                 {city.name}
               </h1>
-              <div className="flex items-center gap-2 text-white/90">
-                <MapPin className="h-5 w-5" />
-                <span className="text-lg">{city.country}</span>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-white/90">
+                  <MapPin className="h-5 w-5" />
+                  <span className="text-lg">{city.country}</span>
+                </div>
+                <Button
+                  variant="hero"
+                  size="lg"
+                  onClick={() => setDrawerOpen(true)}
+                  className="gap-2"
+                >
+                  <Plane className="h-5 w-5" />
+                  Quero viajar
+                </Button>
               </div>
             </div>
           </div>
@@ -328,6 +342,11 @@ const CityDetail = () => {
         </section>
       </main>
       <Footer />
+      <TravelInquiryDrawer
+        cityName={city.name}
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+      />
     </div>
   );
 };
