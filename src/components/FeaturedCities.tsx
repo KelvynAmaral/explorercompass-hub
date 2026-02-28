@@ -2,66 +2,17 @@ import { useState, useMemo } from "react";
 import CityCard from "./CityCard";
 import { Input } from "@/components/ui/input";
 import { Search, MapPinOff } from "lucide-react";
-import buenosAiresImg from "@/assets/buenos-aires.jpg";
-import medellinImg from "@/assets/medellin.jpg";
-import lisboaImg from "@/assets/lisboa.jpg";
+import { destinations } from "@/data/destinations";
 
 const categories = ["Todos", "Praia", "Montanha", "Cidades"] as const;
 type Category = (typeof categories)[number];
-
-interface CityData {
-  id: string;
-  name: string;
-  country: string;
-  image: string;
-  costLevel: string;
-  avgTemp: string;
-  description: string;
-  category: Category;
-}
-
-const cities: CityData[] = [
-  {
-    id: "buenos-aires",
-    name: "Buenos Aires",
-    country: "Argentina",
-    image: buenosAiresImg,
-    costLevel: "Acessível",
-    avgTemp: "18°C",
-    description:
-      "A capital argentina oferece rica cultura, gastronomia de classe mundial e custo de vida acessível para brasileiros.",
-    category: "Cidades",
-  },
-  {
-    id: "medellin",
-    name: "Medellín",
-    country: "Colômbia",
-    image: medellinImg,
-    costLevel: "Moderado",
-    avgTemp: "24°C",
-    description:
-      "Conhecida como a cidade da eterna primavera, é o paraíso dos nômades digitais com excelente infraestrutura.",
-    category: "Montanha",
-  },
-  {
-    id: "lisboa",
-    name: "Lisboa",
-    country: "Portugal",
-    image: lisboaImg,
-    costLevel: "Alto",
-    avgTemp: "17°C",
-    description:
-      "A capital portuguesa combina história, qualidade de vida e facilidades para brasileiros que buscam migração na Europa.",
-    category: "Praia",
-  },
-];
 
 const FeaturedCities = () => {
   const [activeCategory, setActiveCategory] = useState<Category>("Todos");
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredCities = useMemo(() => {
-    return cities.filter((city) => {
+    return destinations.filter((city) => {
       const matchesCategory =
         activeCategory === "Todos" || city.category === activeCategory;
       const matchesSearch = city.name
@@ -79,7 +30,7 @@ const FeaturedCities = () => {
             Destinos em Destaque
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Explore nossos destinos iniciais com informações completas e atualizadas
+            Explore nossos destinos com informações completas e atualizadas
           </p>
         </div>
 
@@ -117,7 +68,15 @@ const FeaturedCities = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredCities.map((city) => (
               <div key={city.id} className="animate-fade-in">
-                <CityCard {...city} />
+                <CityCard
+                  id={city.id}
+                  name={city.name}
+                  country={city.country}
+                  image={city.image}
+                  costLevel={city.costLevel}
+                  avgTemp={city.migration.avgTemperature}
+                  description={city.description}
+                />
               </div>
             ))}
           </div>
