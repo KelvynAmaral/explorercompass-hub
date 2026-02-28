@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import TravelInquiryDrawer from "@/components/TravelInquiryDrawer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -16,6 +17,7 @@ import {
   Calendar,
   Phone,
   Star,
+  Plane,
 } from "lucide-react";
 import buenosAiresImg from "@/assets/buenos-aires.jpg";
 import medellinImg from "@/assets/medellin.jpg";
