@@ -128,6 +128,7 @@ const citiesData: Record<string, any> = {
 const CityDetail = () => {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("turismo");
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const city = id ? citiesData[id] : null;
 
   if (!city) {
