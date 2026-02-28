@@ -1,9 +1,26 @@
+import { useState, useMemo } from "react";
 import CityCard from "./CityCard";
+import { Input } from "@/components/ui/input";
+import { Search, MapPinOff } from "lucide-react";
 import buenosAiresImg from "@/assets/buenos-aires.jpg";
 import medellinImg from "@/assets/medellin.jpg";
 import lisboaImg from "@/assets/lisboa.jpg";
 
-const cities = [
+const categories = ["Todos", "Praia", "Montanha", "Cidades"] as const;
+type Category = (typeof categories)[number];
+
+interface CityData {
+  id: string;
+  name: string;
+  country: string;
+  image: string;
+  costLevel: string;
+  avgTemp: string;
+  description: string;
+  category: Category;
+}
+
+const cities: CityData[] = [
   {
     id: "buenos-aires",
     name: "Buenos Aires",
@@ -13,6 +30,7 @@ const cities = [
     avgTemp: "18°C",
     description:
       "A capital argentina oferece rica cultura, gastronomia de classe mundial e custo de vida acessível para brasileiros.",
+    category: "Cidades",
   },
   {
     id: "medellin",
@@ -23,6 +41,7 @@ const cities = [
     avgTemp: "24°C",
     description:
       "Conhecida como a cidade da eterna primavera, é o paraíso dos nômades digitais com excelente infraestrutura.",
+    category: "Montanha",
   },
   {
     id: "lisboa",
@@ -33,10 +52,25 @@ const cities = [
     avgTemp: "17°C",
     description:
       "A capital portuguesa combina história, qualidade de vida e facilidades para brasileiros que buscam migração na Europa.",
+    category: "Praia",
   },
 ];
 
 const FeaturedCities = () => {
+  const [activeCategory, setActiveCategory] = useState<Category>("Todos");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredCities = useMemo(() => {
+    return cities.filter((city) => {
+      const matchesCategory =
+        activeCategory === "Todos" || city.category === activeCategory;
+      const matchesSearch = city.name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [activeCategory, searchQuery]);
+
   return (
     <section className="py-24">
       <div className="container mx-auto px-4">
@@ -49,11 +83,53 @@ const FeaturedCities = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {cities.map((city) => (
-            <CityCard key={city.id} {...city} />
-          ))}
+        {/* Filters */}
+        <div className="flex flex-col sm:flex-row items-center gap-4 mb-10">
+          <div className="flex gap-2 flex-wrap justify-center">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 border ${
+                  activeCategory === cat
+                    ? "bg-primary text-primary-foreground border-primary shadow-md"
+                    : "bg-background text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          <div className="relative w-full sm:w-64 sm:ml-auto">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Buscar destino..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9"
+            />
+          </div>
         </div>
+
+        {/* Grid */}
+        {filteredCities.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredCities.map((city) => (
+              <div key={city.id} className="animate-fade-in">
+                <CityCard {...city} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-20 text-muted-foreground animate-fade-in">
+            <MapPinOff className="h-12 w-12 mb-4 opacity-50" />
+            <p className="text-lg font-medium">Nenhum destino encontrado</p>
+            <p className="text-sm mt-1">
+              Tente alterar os filtros ou a busca.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );
