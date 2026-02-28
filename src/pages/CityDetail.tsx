@@ -165,9 +165,20 @@ const CityDetail = () => {
               <h1 className="font-heading font-bold text-5xl text-white mb-2">
                 {city.name}
               </h1>
-              <div className="flex items-center gap-2 text-white/90">
-                <MapPin className="h-5 w-5" />
-                <span className="text-lg">{city.country}</span>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-white/90">
+                  <MapPin className="h-5 w-5" />
+                  <span className="text-lg">{city.country}</span>
+                </div>
+                <Button
+                  variant="hero"
+                  size="lg"
+                  onClick={() => setDrawerOpen(true)}
+                  className="gap-2"
+                >
+                  <Plane className="h-5 w-5" />
+                  Quero viajar
+                </Button>
               </div>
             </div>
           </div>
