@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import CityCard from "@/components/CityCard";
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -338,6 +339,32 @@ const CityDetail = () => {
                 </Card>
               </TabsContent>
             </Tabs>
+          </div>
+        </section>
+
+        {/* Other Destinations */}
+        <section className="py-24 bg-secondary/30">
+          <div className="container mx-auto px-4">
+            <h2 className="font-heading font-bold text-3xl md:text-4xl text-center mb-12">
+              Outros destinos que você pode gostar
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {Object.entries(citiesData)
+                .filter(([key]) => key !== id)
+                .slice(0, 3)
+                .map(([key, c]) => (
+                  <CityCard
+                    key={key}
+                    id={key}
+                    name={c.name}
+                    country={c.country}
+                    image={c.image}
+                    costLevel={c.tourism.dailyCost}
+                    avgTemp={c.migration.avgTemperature}
+                    description={c.migration.visa.slice(0, 100) + "..."}
+                  />
+                ))}
+            </div>
           </div>
         </section>
       </main>
